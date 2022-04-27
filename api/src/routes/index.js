@@ -12,8 +12,9 @@ const urlAllT = ` https://pokeapi.co/api/v2/type`;
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-//---funciones
-//--1)---getapi info countries y agregar a DB-----
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//----------------------funciones----------------------//
+//--1)---getapi info countries y agregar a DB--------|
 
 const getApiInfoCountries = async () => {
   try {
@@ -32,15 +33,12 @@ const getApiInfoCountries = async () => {
       };
     });
     return apiInfo;
-    //---fin solo 20------
   } catch (error) {
     console.log(error);
   }
 };
 const addToDbCountry = async () => {
   const x = await getApiInfoCountries();
-  console.log(x[0]);
-  // return { img_flag, continent, capital, subregion, area, people };
   const countryToDb = x.slice(0, 5).map(async (e) => {
     await Country.create({
       id: e.id.toUpperCase(),
@@ -56,8 +54,8 @@ const addToDbCountry = async () => {
 
   return { x };
 };
-//--1)---fin getapi info countries y agregar a DB-----
-//--2)---tomar paises de la DB guardados-----
+//--1)---fin getapi info countries y agregar a DB ----|
+//--2)---tomar paises de la DB -----------------------|
 const getAllInfoCountry = async () => {
   let countryDb = await Country.findAll({
     order: [["name", "ASC"]],
@@ -65,17 +63,13 @@ const getAllInfoCountry = async () => {
     include: {
       model: Activity,
       attributes: ["id", "name", "difficulty", "duration", "season"],
-      through: {
-        attributes: [],
-      },
+      through: { attributes: [] },
     },
-    // attributes: ["name"],
-    // through: { attributes: [] },
   });
   return countryDb;
 };
-//--2)---fin tomar paises de la DB guardados-----
-//--3)---tomar paise por nombre de DB guardados-----
+//--2)---fin tomar paises de la DB --------------------|
+//--3)---tomar paise por nombre exacto de DB------|
 const getNameInfoCountry = async (name) => {
   let countryDb = await Country.findAll({
     where: {
@@ -93,9 +87,8 @@ const getNameInfoCountry = async (name) => {
   });
   return countryDb;
 };
-//--3)---fin tomar paise por nombre de DB guardados-----
-//--4)---validar info de  DB guardados-----
-
+//--3)---fin tomar paise por nombre de DB ----------|
+//--4)---validar info de  DB guardados----------------|
 const getCountriesFromDB = async () => {
   try {
     const countries = await Country.findAll({
@@ -107,25 +100,19 @@ const getCountriesFromDB = async () => {
     return 0;
   }
 };
-//--4)---fin validar info de  DB guardados-----
+//--4)---fin validar info de  DB guardados------------|
 
-//---fin de funciones
-
-//definiendo rutas iniciales sin modulizar aun
-//--------.get("/"--------
+//-------------------fin de funciones-------------------
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//-------------------rutas-------------------------------//
+//--------.get("/"---------------------------------------|
 router.get("/", async (req, res, next) => {
   // const dbCountry = await addToDbCountry();
-  res.send("se llamo y creo en base de datos los paises");
+  res.send("ruta landing page");
 });
-//--------fin .get("/"--------
-//--------.get("/recarga"--------
-router.get("/recarga", async (req, res, next) => {
-  const dbCountry = await addToDbCountry();
-  res.send("ruta principal ladingpage");
-});
-//--------fin .get("/recarga"--------
+//--------fin .get("/" -----------------------------------|
 
-//--------.get("/countries"--------
+//--------.get("/countries" -----------------------------|
 
 router.get("/countries", async (req, res, next) => {
   //1er no match esacto,2da matchexacto
@@ -138,7 +125,7 @@ router.get("/countries", async (req, res, next) => {
     console.log("Ya existe info en base de datos");
   }
 
-  const { name } = req.query;
+  const { name } = await req.query;
   const countryTotal = await getAllInfoCountry(); //1era
   //const countryNamel = await getNameInfoCountry(name); //2da
 
@@ -157,15 +144,15 @@ router.get("/countries", async (req, res, next) => {
       : res.status(404).send("no esta el pais que busca");
     //fin 1era
   } else {
-    // const countryTotal = await getAllInfoCountry(); //2da
+    const countryTotal = await getAllInfoCountry(); //2da y era
     res.json(countryTotal);
 
     console.log(`hola desde home sin query get("/countries-->`);
   }
 });
-//-------- fin .get("/countries"--------
+//-------- fin .get("/countries" -------------------------|
 
-//--------.get("/countries/:id"--------
+//--------.get("/countries/:id"--------------------------|
 
 router.get("/countries/:id", async (req, res, next) => {
   const { id } = req.params;
@@ -192,7 +179,9 @@ router.get("/countries/:id", async (req, res, next) => {
     );
   }
 });
-//--------fin .get("/countries/:id"--------
+//--------fin .get("/countries/:id" ----------------------|
+
+//--------.post("/activity" ------------------------------|
 
 router.post("/activity", async (req, res, next) => {
   const { name, difficulty, duration, season, country } = req.body;
@@ -226,8 +215,17 @@ router.post("/activity", async (req, res, next) => {
     res.send(error);
   }
 });
+//--------fin .post("/activity" --------------------------|
 
-//prueba get /activity:
+//--------.otras rutas pruebas~~~~~~~~~~~~~~//
+//--------.get("/recarga"-------------------------------|
+router.get("/recarga", async (req, res, next) => {
+  const dbCountry = await addToDbCountry();
+  res.send("ruta principal ladingpage");
+});
+//--------fin .get("/recarga"----------------------------|
+//-------prueba get /activity:---------------------------|
+
 router.get("/activity", async (req, res) => {
   const actividades = await Activity.findAll({
     include: {
@@ -240,7 +238,9 @@ router.get("/activity", async (req, res) => {
   });
   res.send(actividades);
 });
-//prueba post para crear paises:
+//-------fin prueba get /activity:-----------------------|
+
+//-------prueba post para crear paises:----------------|
 router.post("/countries", async (req, res, next) => {
   const { name, img_flag, continent, capital, subregion, area, people } =
     req.body;
@@ -260,5 +260,44 @@ router.post("/countries", async (req, res, next) => {
     res.send(error);
   }
 });
+//----fin prueba post para crear paises:----------------|
+
+//-------prueba delete /activity:---------------------------|
+
+router.delete("/activity", async (req, res, next) => {
+  const { name, difficulty, duration, season, country } = req.body;
+  try {
+    const [newActivity] = await Activity.destroy({
+      where: { name, difficulty, duration, season },
+    });
+    // const newActivity = await Activity.create({name,difficulty,duration,season,});
+    let countryDb = await Country.findAll({
+      // where: { name: ["fire", "flying"] },
+      where: { name: country },
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
+    // let vc;
+    // vc = await countryDb;
+    // await console.log("vc solito", vc);
+    // await console.log("pais agregado (post(/activity ", vc[0].name);
+
+    await newActivity.removeCountry(countryDb);
+    if (countryDb.length) {
+      //res.send(countryDb);
+
+      res.send(`actividad ${name} eliminada en pais ${country}`);
+    } else {
+      res.send(`actividad: ${name} , eliminada, sin pais`);
+    }
+  } catch (error) {
+    if (error.name === "SequelizeUniqueConstraintError") {
+      res.send("ya existe el nombre de la actividad");
+    }
+    res.send(error);
+  }
+});
+//-------fin prueba get /activity:-----------------------|
+//-------------------fin de rutas-------------------------------//
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 module.exports = router;
