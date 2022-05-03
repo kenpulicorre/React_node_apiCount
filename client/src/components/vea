@@ -1,0 +1,30 @@
+// http://localhost:3001/pokemons?name=pikachuken
+
+// 1-card
+// 2-createForm
+// 3-Detail
+// 4-Home
+// 5-LandingPages
+// 6-Paginado
+// 7-SearchBar
+
+// name: "normal",
+//     name: "fighting",
+//     name: "flying",
+//     name: "poison",
+//     name: "ground",
+//     name: "rock",
+//     name: "bug",
+//     name: "ghost",
+//     name: "steel",
+//     name: "fire",
+//     name: "water",
+//     name: "grass",
+//     name: "electric",
+//     name: "psychic",
+//     name: "ice",
+//     name: "dark",
+//     name: "dragon",
+//     name: "fairy",
+//     name: "unknown",
+//     name: "shadow",
