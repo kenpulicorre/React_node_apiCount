@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getActivities, getCountryById } from "../actions/index.js";
 import estilos from "./DetailCountry.module.css";
 
@@ -16,7 +16,7 @@ export default function DetailCountry(props) {
   let arreglo_actividades;
   console.log("las actividades son y:", paisInfoByIdi.activities);
   // console.log("esto es lo recivido cuando si recibe:", paisInfoByIdi.activities.length ); //pregunta
-  if (paisInfoByIdi.name) {
+  if (paisInfoByIdi.activities) {
     // console.log( "esto es lo recivido cuando si recibe:",paisInfoByIdi.activities.length );
     // console.log("sacando info id:", paisInfoByIdi.activities.id);
     arreglo_actividades = paisInfoByIdi.activities.map((e) => (
@@ -31,9 +31,12 @@ export default function DetailCountry(props) {
 
   return (
     <div>
-      hola desde el detalle el id es:
-      {id}
-      <div>
+      {/* hola desde el detalle el id es:
+      {id} */}
+      <Link to="/home">
+        <button className={estilos.boton}>VOLVER</button>
+      </Link>
+      <div className={estilos.container}>
         <li>Nombre del pais: {paisInfoByIdi.name}</li>
         <li>Codigo del pais: {paisInfoByIdi.id}</li>
         <li>Continente: {paisInfoByIdi.continent}</li>
@@ -53,6 +56,9 @@ export default function DetailCountry(props) {
           </div>
         )}
       </div>
+      <Link to="/home">
+        <button className={estilos.boton}>VOLVER</button>
+      </Link>
     </div>
   );
 }

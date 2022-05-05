@@ -11,7 +11,7 @@ export default function Paginado(params) {
   // console.log("arreglo de allCountries (paignado.jsx)", allCountries.length);
   // console.log("todos los paises son (paignado.jsx): ", allCountries);
 
-  if (allCountries.length && allCountries.length < 9) {
+  if (allCountries.length && allCountries.length <= 9) {
     console.log("entro al 9");
     max = 1;
   } else if (allCountries.length > 9) {

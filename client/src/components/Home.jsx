@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import estilos from "./Home.module.css";
-import { getActivities } from "../actions/index.js";
+import {
+  getActivities,
+  orderAscDes,
+  orderMaxMinPobla,
+  filterByContinent,
+  filterByActivity,
+  restartDetalle,
+} from "../actions/index.js";
 import getCountries from "../actions/index";
 import Paginado from "./Paginado";
 import Card from "./Card";
@@ -57,17 +64,40 @@ export default function Home(params) {
     console.log("---Se ejecuto use effect en componente Home--");
     dispatch(getCountries());
     dispatch(getActivities());
+    dispatch(restartDetalle());
   }, [dispatch]); //[] =1sola vez,[state]=cada state ejecuta
 
   //------------funciones internas----------//
+  function handleClick(e) {
+    e.preventDefault();
+    dispatch(getCountries());
+    alert("Se cargara paises");
+  }
+  function handleOrder(event) {
+    event.preventDefault();
+    setActualpage(1);
+    dispatch(orderAscDes(event.target.value));
+    setOrder(`se ordeno${event.target.value}`);
+  }
+  //"""""
+  function handleOrderPobla(event) {
+    event.preventDefault();
+    dispatch(orderMaxMinPobla(event.target.value));
+    setOrder(`se ordeno${event.target.value}`);
+    setActualpage(1);
+  }
 
+  //-------
   function onSelContinent(event) {
     console.log("event.target.name---", event.target.name);
     console.log("event.target.value---", event.target.value);
+    dispatch(filterByContinent(event.target.value));
   }
   function onSelActivities(event) {
     console.log("event.target.name---", event.target.name);
     console.log("event.target.value---", event.target.value);
+    dispatch(filterByActivity(event.target.value));
+    setActualpage(1);
   }
 
   //---set paginado
@@ -78,7 +108,7 @@ export default function Home(params) {
     } else {
       setPaisByPage(9);
     }
-    setOrder("actuliza");
+    // setOrder("actuliza");
     //seleccionar cuontries de ini a fin
   };
   //---fin set paginado
@@ -110,18 +140,17 @@ export default function Home(params) {
   // };
   //------------fin funciones internas----------//
 
-  let ff = paisToShow?.map((el) => {
-    return {
-      name: el.name,
-      img_flag: el.img_flag,
-      continent: el.continent,
-    };
-  });
-  let hi = paisToShow[0];
-  // let h2 = hi.name;
+  // let ff = paisToShow?.map((el) => {
+  //   return {
+  //     name: el.name,
+  //     img_flag: el.img_flag,
+  //     continent: el.continent,
+  //   };
+  // });
+  // let hi = paisToShow[0];
 
-  console.log("aquii+++++++++++", ff[0]);
-  console.log("aquii+++++++++++ppp", hi);
+  // console.log("aquii+++++++++++", ff[0]);
+  // console.log("aquii+++++++++++ppp", hi);
 
   return (
     <div>
@@ -133,7 +162,12 @@ export default function Home(params) {
           <Link to="/country" className={estilos.crear_pais}>
             crear pais
           </Link>
-          <button className={estilos.crear_pais}>Recargar pokemons</button>
+          <button
+            onClick={(e) => handleClick(e)}
+            className={estilos.crear_pais}
+          >
+            Recargar Paises
+          </button>
         </p>
         {/* serach */}
         <SearchBar />
@@ -155,7 +189,7 @@ export default function Home(params) {
         {/* ordenar por alfabeto */}
         <div>
           <h3>ordenar por alfabeto</h3>
-          <select name="alfabeto" size="1" onChange={(e) => onSelActivities(e)}>
+          <select name="alfabeto" size="1" onChange={(e) => handleOrder(e)}>
             <option value="Asc">Ascendente</option>
             <option value="Des">Descendente</option>
           </select>
@@ -167,7 +201,7 @@ export default function Home(params) {
           <select
             name="poblacion"
             size="1"
-            onChange={(e) => onSelActivities(e)}
+            onChange={(e) => handleOrderPobla(e)}
           >
             <option value="max">mayor poblacion</option>
             <option value="min">menos poblacion</option>
@@ -181,20 +215,21 @@ export default function Home(params) {
             size="1"
             onChange={(e) => onSelContinent(e)}
           >
-            <option value="All">Continentes</option>
-            <option value="Asi">Asia</option>
-            <option value="Eur">Europa</option>
-            <option value="Afr">Africa</option>
-            <option value="NAm">Norte America</option>
-            <option value="SAm">Sur America</option>
-            <option value="Oce">Oceania</option>
+            <option value="All">Todos</option>
+            <option value="Antarctica">Antartica</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europa</option>
+            <option value="Africa">Africa</option>
+            <option value="North America">Norte America</option>
+            <option value="South America">Sur America</option>
+            <option value="Oceania">Oceania</option>
           </select>
         </div>
         {/* Filtrar por Acividades */}
         <div>
           <h3>Filtrar por Acividades</h3>
           <select name="" size="1" onChange={(e) => onSelActivities(e)}>
-            <option value="All">Actividades</option>
+            <option value="All">Todas</option>
             {allActivities?.map((e) => (
               <option key={e.id} value={e.name}>
                 {e.name}

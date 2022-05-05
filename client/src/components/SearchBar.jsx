@@ -10,6 +10,7 @@ export default function SearchBar(params) {
   const [name, setName] = useState("");
   const handleSubmit = () => {
     dispatch(getNameCountry(name));
+    setName("");
   };
   const onHandleChange = (e) => {
     setName(e.target.value.toLowerCase());

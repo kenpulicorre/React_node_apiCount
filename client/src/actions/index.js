@@ -4,6 +4,12 @@ export const GET_COUNTRIES = "getCountries";
 export const GET_ACTIVITIES = "getActivities";
 export const GET_NAME_COUNTRY = "getNameCountry";
 export const GET_COUNTRIE_ID = "getCountryById";
+export const ORDER_NAME = "orderAscDes";
+export const ORDER_PEOPLE = "orderMaxMinPobla";
+export const FILTER_CONTINENT = "filterByContinent";
+export const FILTER_ACTIVITY = "filterByActivity";
+export const DETALLE_RESTAURAR = "restartDetalle";
+
 //~~~~~~~~~~~~~~~~~~~~~~~
 
 export function getActivities() {
@@ -49,6 +55,37 @@ export function getCountryById(id) {
   };
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~
+export function orderAscDes(params) {
+  console.log("--Action orderAscDes ok!--", params);
+  return { type: ORDER_NAME, payload: params };
+}
+//~~~~~~~~~~~~~~~~~~~~~~~
+export function orderMaxMinPobla(params) {
+  console.log("--Action orderMaxMinPobla ok!--", params);
+  return { type: ORDER_PEOPLE, payload: params };
+}
+//~~~~~~~~~~~~~~~~~~~~~~~
+export function filterByContinent(params) {
+  console.log("--Action filterByContinent ok!--", params);
+  return { type: FILTER_CONTINENT, payload: params };
+}
+//~~~~~~~~~~~~~~~~~~~~~~~
+export function filterByActivity(params) {
+  console.log("--Action filterByActivity ok!--", params);
+
+  return { type: FILTER_ACTIVITY, payload: params };
+}
+//~~~~~~~~~~~~~~~~~~~~~~~
+
+export function restartDetalle(params) {
+  console.log("----restartDetalle Ok!");
+
+  return {
+    type: DETALLE_RESTAURAR,
+    payload: params,
+  };
+}
 //~~~~~~~~~~~~~~~~~~~~~~~
 
 export default function getCountries() {
