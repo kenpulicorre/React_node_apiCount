@@ -1,7 +1,13 @@
-import { GET_COUNTRIES, GET_ACTIVITIES } from "../actions/index.js";
+import {
+  GET_COUNTRIES,
+  GET_ACTIVITIES,
+  GET_NAME_COUNTRY,
+  GET_COUNTRIE_ID,
+} from "../actions/index.js";
 const initialState = {
   todosCountries: [],
   activities: [],
+  detalle: [],
 };
 function rootReducer(state = initialState, action) {
   //---------
@@ -16,7 +22,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         activities: action.payload,
       };
-
+    case GET_NAME_COUNTRY:
+      return {
+        ...state,
+        todosCountries: action.payload,
+      };
+    case GET_COUNTRIE_ID:
+      return { ...state, detalle: action.payload };
     default:
       return state;
       break;

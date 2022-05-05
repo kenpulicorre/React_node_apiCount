@@ -100,11 +100,21 @@
   display: block;
   color: white;
   text-align: center;
-  padding: 16px;
+  padding: 10px;
   text-decoration: none;
 }
 
 li a:hover {
   background-color: #111111;
   transform: scale(1.1);
+}
+
+.nave {
+  background-color: #333333;
+  display: flex;
+  justify-content: space-between;
+  justify-content: center;
+}
+.nave button:hover {
+  background-color: #111111;
 }

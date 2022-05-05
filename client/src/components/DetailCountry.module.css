@@ -1,3 +1,8 @@
+.container_actividades {
+  display: flex;
+  justify-content: space-between;
+}
+
 .container0 {
   margin-top: 0;
   width: auto;

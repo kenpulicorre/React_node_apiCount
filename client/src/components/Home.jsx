@@ -1,14 +1,18 @@
 import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import estilos from "./Home.module.css";
 import { getActivities } from "../actions/index.js";
 import getCountries from "../actions/index";
 import Paginado from "./Paginado";
+import Card from "./Card";
+import SearchBar from "./SearchBar";
 export default function Home(params) {
   //mapdispatchtoprops
   const dispatch = useDispatch();
+  const { id } = useParams(); //foma 2 con el hook useparams
+
   //mapstatetoprops
   const allCountries = useSelector((state) => state.todosCountries);
   const r1 = allCountries;
@@ -18,7 +22,7 @@ export default function Home(params) {
   const allActivities = useSelector((state) => state.activities);
   // const r = allCountries.map((e) => e[0].name);
   // console.log("desde home allcountries.name", r);
-  console.log("desde home activities", allActivities);
+  // console.log("desde home activities", allActivities);
   //------------estados locales----------//
   const [order, setOrder] = useState("");
   const [actualPage, setActualpage] = useState(1);
@@ -77,10 +81,51 @@ export default function Home(params) {
     setOrder("actuliza");
     //seleccionar cuontries de ini a fin
   };
-  //------------funciones internas----------//
+  //---fin set paginado
+
+  //---setPaginaConBotton
+  const setPaginaConBotton = (e) => {
+    let cont = actualPage + e;
+    if (cont < 1) {
+      cont = 1;
+    }
+    setPaginado(cont);
+  };
+  //---fin setPaginaConBotton
+
+  //---onHandleChange
+  // const onHandleChange = (e) => {
+  //   setName(e.target.value.toLowerCase());
+  //   console.log("valor de serachbar", e.target.value);
+  //   console.log("name de serachbar", e.target.name);
+  // };
+  //----fin onHandleChange
+
+  // const handleSubmit = (e) => {
+  //   console.log(
+  //     `auqi se despacha la xion que recive el name: ${name}y busca en el back`
+  //   );
+  //   dispatch(getNameCountry(name));
+  //   console.log("quiero saber ahora los paises", allCountries);
+  // };
+  //------------fin funciones internas----------//
+
+  let ff = paisToShow?.map((el) => {
+    return {
+      name: el.name,
+      img_flag: el.img_flag,
+      continent: el.continent,
+    };
+  });
+  let hi = paisToShow[0];
+  // let h2 = hi.name;
+
+  console.log("aquii+++++++++++", ff[0]);
+  console.log("aquii+++++++++++ppp", hi);
 
   return (
     <div>
+      <div>hola desde el detalle el id es: {id}</div>
       <h1 className={estilos.title}>¡MANIFIESTA TU PAIS!</h1>
       {/* botones y search------ */}
       <div className={estilos.botonsysearch}>
@@ -90,9 +135,19 @@ export default function Home(params) {
           </Link>
           <button className={estilos.crear_pais}>Recargar pokemons</button>
         </p>
-        <p>
-          <button className={estilos.crear_pais}> searchbar</button>
-        </p>
+        {/* serach */}
+        <SearchBar />
+        {/* <p>
+          <button className={estilos.button} onClick={(e) => handleSubmit()}>
+            searchbar
+          </button>
+          <input
+            type="text"
+            placeholder="Digite pais"
+            value={name}
+            onChange={(e) => onHandleChange(e)}
+          />
+        </p> */}
       </div>
       {/* fin botones y search------ */}
       {/* filtros------------------------- */}
@@ -151,7 +206,6 @@ export default function Home(params) {
       {/* fin filtros------------------------- */}
       <br />
       {/* <nav> */}
-
       {/* <nav>
         <ul className={estilos.uli}>
           <li>
@@ -165,17 +219,35 @@ export default function Home(params) {
           </li>
         </ul>
       </nav> */}
-
       {/* </nav> */}
-
       {/* Paginado------------------------- */}
       <Paginado
         setPaginado={setPaginado}
         allCountries={allCountries}
         paisByPage={paisByPage}
         actualPage={actualPage}
+        setPaginaConBotton={setPaginaConBotton}
       />
       {/* Paginado------------------------- */}
+      {/* Card------------------------- */}
+      <div>
+        <h1>pais a mostrar</h1>
+        {/* {paisToShow?.map((el) => {
+          return (
+            <div>
+              <p></p>
+              <h1> {el.name}</h1>
+              <img src={el.img_flag} alt="" />
+              <h2>{el.continent}</h2>
+            </div>
+            // name: el.name,
+            // img_flag: el.img_flag,
+            // continent: el.continent,
+          );
+        })} */}
+      </div>
+      <Card paisToShow={paisToShow} />
+      {/* fin de Card------------------------- */}
     </div>
   );
 }

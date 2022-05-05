@@ -39,7 +39,7 @@ const getApiInfoCountries = async () => {
 };
 const addToDbCountry = async () => {
   const x = await getApiInfoCountries();
-  const countryToDb = x.slice(0, 300).map(async (e) => {
+  const countryToDb = x.slice(0, 3).map(async (e) => {
     await Country.create({
       id: e.id.toUpperCase(),
       name: e.name,
@@ -155,29 +155,31 @@ router.get("/countries", async (req, res, next) => {
 //--------.get("/countries/:id"--------------------------|
 
 router.get("/countries/:id", async (req, res, next) => {
-  const { id } = req.params;
-  let countryId = await Country.findOne({
-    where: { id: id.toUpperCase() },
-    include: {
-      model: Activity,
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-      through: {
-        attributes: [],
+  try {
+    const { id } = req.params;
+    let countryId = await Country.findOne({
+      where: { id: id.toUpperCase() },
+      include: {
+        model: Activity,
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+        through: {
+          attributes: [],
+        },
       },
-    },
-  });
-  // let countryId = await Country.findByPk(id.toUpperCase());
+    });
+    // let countryId = await Country.findByPk(id.toUpperCase());
 
-  if (countryId === null) {
-    res.status(400).send("no se encuentra Pais");
-  } else {
-    !countryId.id.length
-      ? res.status(400).send("no se encuentra Pais")
-      : res.status(200).json(countryId);
-    console.log(
-      `hola  desde params, get(/countries/:id:, busqueda de pais por id ${id}`
-    );
-  }
+    if (countryId === null) {
+      res.status(400).send("no se encuentra Pais");
+    } else {
+      !countryId.id.length
+        ? res.status(400).send("no se encuentra Pais")
+        : res.status(200).json(countryId);
+      console.log(
+        `hola  desde params, get(/countries/:id:, busqueda de pais por id ${id}`
+      );
+    }
+  } catch (error) {}
 });
 //--------fin .get("/countries/:id" ----------------------|
 
