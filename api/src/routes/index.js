@@ -39,7 +39,8 @@ const getApiInfoCountries = async () => {
 };
 const addToDbCountry = async () => {
   const x = await getApiInfoCountries();
-  const countryToDb = x.slice(0, 40).map(async (e) => {
+  // const countryToDb = x.slice(0, 40).map(async (e) => {
+  const countryToDb = x.map(async (e) => {
     await Country.create({
       id: e.id.toUpperCase(),
       name: e.name,

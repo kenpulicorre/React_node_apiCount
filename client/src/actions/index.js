@@ -9,6 +9,7 @@ export const ORDER_PEOPLE = "orderMaxMinPobla";
 export const FILTER_CONTINENT = "filterByContinent";
 export const FILTER_ACTIVITY = "filterByActivity";
 export const DETALLE_RESTAURAR = "restartDetalle";
+export const POST_COUNTRY = "postCountry";
 
 //~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -84,6 +85,18 @@ export function restartDetalle(params) {
   return {
     type: DETALLE_RESTAURAR,
     payload: params,
+  };
+}
+//~~~~~~~~~~~~~~~~~~~~~~~
+export function postCountry(params) {
+  console.log("--Action postCountry!--", params);
+  return async function (dispatch) {
+    try {
+      const json = await axios.post(`http://localhost:3001/activity`, params);
+      return dispatch({ type: POST_COUNTRY, payload: json });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 //~~~~~~~~~~~~~~~~~~~~~~~

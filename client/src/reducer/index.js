@@ -8,6 +8,7 @@ import {
   FILTER_CONTINENT,
   FILTER_ACTIVITY,
   DETALLE_RESTAURAR,
+  POST_COUNTRY,
 } from "../actions/index.js";
 const initialState = {
   todosCountries: [],
@@ -133,6 +134,8 @@ function rootReducer(state = initialState, action) {
         detalle: {},
       };
     //---------------
+    case POST_COUNTRY:
+      return { ...state };
 
     default:
       return state;

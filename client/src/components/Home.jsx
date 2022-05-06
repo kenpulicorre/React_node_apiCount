@@ -266,7 +266,7 @@ export default function Home(params) {
       {/* Paginado------------------------- */}
       {/* Card------------------------- */}
       <div>
-        <h1>pais a mostrar</h1>
+        
         {/* {paisToShow?.map((el) => {
           return (
             <div>
