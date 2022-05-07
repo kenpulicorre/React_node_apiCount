@@ -19,10 +19,11 @@ module.exports = (sequelize) => {
       },
       difficulty: {
         type: DataTypes.STRING,
+        validate: { isIn: [["1", "2", "3", "4", "5"]] },
       },
       duration: {
         type: DataTypes.STRING,
-        validate: { isIn: [["1", "2", "3", "4", "5"]] },
+        // validate: { isIn: [["1", "2", "3", "4", "5"]] },
       },
       season: {
         type: DataTypes.STRING,
