@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { getActivities, getCountryById } from "../actions/index.js";
 import estilos from "./DetailCountry.module.css";
-
+import img from "../images/bandera6.gif";
 export default function DetailCountry(props) {
   const dispatch = useDispatch();
   const { id } = useParams(); //foma 2 con el hook useparams
@@ -21,10 +21,11 @@ export default function DetailCountry(props) {
     // console.log("sacando info id:", paisInfoByIdi.activities.id);
     arreglo_actividades = paisInfoByIdi.activities.map((e) => (
       <div key={e.id}>
-        <li>Actividad: {e.name} </li>
+        <li>Nombre: {e.name} </li>
         <li>Dificultad: {e.difficulty} </li>
         <li>Duracion: {e.duration} </li>
         <li>Estacion: {e.season} </li>
+        
       </div>
     ));
   }
@@ -44,8 +45,12 @@ export default function DetailCountry(props) {
         <li>Capital: {paisInfoByIdi.capital}</li>
         <li>Area: {paisInfoByIdi.area} Km2</li>
         <li>Poblacion: {paisInfoByIdi.people}</li>
-        <img src={paisInfoByIdi.img_flag} alt="no hay imagen" />
-
+        <img
+          src={paisInfoByIdi.img_flag}
+          className={estilos.imagen}
+          alt="no hay imagen"
+        />
+        <h2>Actividades</h2>
         {paisInfoByIdi.activities && paisInfoByIdi.activities.length === 0 ? (
           <div>
             <h1>No se han creado actividades para este pais</h1>

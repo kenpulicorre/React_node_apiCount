@@ -19,15 +19,15 @@ export default function SearchBar(params) {
   return (
     <div className={estilos.botonsysearch}>
       <p>
-        <button className={estilos.button} onClick={(e) => handleSubmit(e)}>
-          searchbar
-        </button>
         <input
           type="text"
           placeholder="Digite pais"
           value={name}
           onChange={(e) => onHandleChange(e)}
         />
+        <button className={estilos.button} onClick={(e) => handleSubmit(e)}>
+          searchbar
+        </button>
       </p>
     </div>
   );

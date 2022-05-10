@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import estilos from "./Home.module.css";
+import Loader from "./Loader";
 import {
   getActivities,
   orderAscDes,
@@ -86,12 +87,12 @@ export default function Home(params) {
     setOrder(`se ordeno${event.target.value}`);
     setActualpage(1);
   }
-
   //-------
   function onSelContinent(event) {
     console.log("event.target.name---", event.target.name);
     console.log("event.target.value---", event.target.value);
     dispatch(filterByContinent(event.target.value));
+    // setActualpage(1);
   }
   function onSelActivities(event) {
     console.log("event.target.name---", event.target.name);
@@ -151,16 +152,21 @@ export default function Home(params) {
 
   // console.log("aquii+++++++++++", ff[0]);
   // console.log("aquii+++++++++++ppp", hi);
-
+  if (allCountries.length < 1) {
+    return <Loader />;
+  }
   return (
     <div>
-      <div>hola desde el detalle el id es: {id}</div>
-      <h1 className={estilos.title}>¡MANIFIESTA TU PAIS!</h1>
+      <div>
+        <h1 className={estilos.title}>¡MANIFIESTA TU PAIS!</h1>
+        <p></p>
+      </div>
+
       {/* botones y search------ */}
       <div className={estilos.botonsysearch}>
         <p className={estilos.botonesIniciales}>
           <Link to="/country" className={estilos.crear_pais}>
-            crear pais
+            crear Actividad
           </Link>
           <button
             onClick={(e) => handleClick(e)}
@@ -187,7 +193,7 @@ export default function Home(params) {
       {/* filtros------------------------- */}
       <div className={estilos.Contenedor_filtro}>
         {/* ordenar por alfabeto */}
-        <div>
+        <div className={estilos.select}>
           <h3>ordenar por alfabeto</h3>
           <select name="alfabeto" size="1" onChange={(e) => handleOrder(e)}>
             <option value="Asc">Ascendente</option>
@@ -239,7 +245,7 @@ export default function Home(params) {
         </div>
       </div>
       {/* fin filtros------------------------- */}
-      <br />
+      {/* <br /> */}
       {/* <nav> */}
       {/* <nav>
         <ul className={estilos.uli}>
@@ -266,7 +272,6 @@ export default function Home(params) {
       {/* Paginado------------------------- */}
       {/* Card------------------------- */}
       <div>
-        
         {/* {paisToShow?.map((el) => {
           return (
             <div>

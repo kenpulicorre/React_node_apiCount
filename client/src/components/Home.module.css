@@ -1,9 +1,21 @@
 .title {
   position: relative;
-  top: 10px;
-  color: rgb(76, 78, 192);
-  text-shadow: 5px 5px 1px rgb(32, 18, 18);
+  top: 1px;
+  color: rgb(66 95 173 / 66%);
+  text-shadow: -1px 1px 4px rgb(80 108 162);
   font-size: 3em;
+  margin-bottom: 5px;
+}
+.imagen {
+  width: 1100px;
+  height: 50px;
+  /* width: 100px;
+
+  height: 10px; */
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
 }
 /* boton crea pais */
 .crear_pais {
@@ -21,7 +33,7 @@
   width: 200px;
   height: 30px;
   justify-content: center;
-  box-shadow: rgba(45, 223, 29, 0.56) 0px 22px 100px 40px;
+  box-shadow: rgba(21, 251, 0, 0.56) 0px 2px 50px 5px;
   border: 5px solid rgb(0, 0, 0);
   border-width: 1px;
   border-radius: 10px 10px 10px 10px;
@@ -38,6 +50,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1px;
 }
 .botonesIniciales {
   display: flex;
@@ -45,33 +58,49 @@
   justify-content: center;
 }
 .Contenedor_filtro {
-  width: 500px;
-  height: 40px;
-  align-items: flex-end;
+  /* width: 900px; */
+  height: 70px;
+  align-items: center;
   display: flex;
   position: relative;
-  top: 10px;
-  left: 10px;
-  font-size: 10px;
-  right: 0px;
+  top: 1px;
+  /* left: 13px; */
+  /* font-size: 1px; */
+  /* right: 11px; */
   margin: border;
-  margin-right: 200px;
-  background: red;
+  /* margin-right: 10px; */
+  /* background: red; */
+  background-color: rgba(0, 0, 0, 0.5);
   background: r;
-  border: 5px solid #121212;
+  border: 2px solid #121212;
+  /* border-radius: 10px; */
   padding-right: 10px;
   padding-top: 2px;
   padding-bottom: 2px;
   padding-left: 10px;
-  margin-left: 50px;
-  left: 100px;
-  justify-content: space-between;
+  /* margin-left: 10px; */
+  /* left: 100px; */
+  justify-content: center;
+  /* bottom: 100px; */
 }
 .Contenedor_filtro h3 {
+  color: rgb(127 220 158);
+  font-size: smaller;
+  font-family: math;
   margin-top: 1px;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
-
+.Contenedor_filtro div select {
+  box-shadow: rgba(29, 223, 39, 0.56) 0px 2px 30px 2px;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: large;
+  /* margin-top: 10px; */
+  text-align-last: center;
+  /* height: 70px; */
+  width: 180px;
+  border-radius: 12px;
+}
 /* JJJJJJj */
 .button {
   color: rgb(255, 255, 255);

@@ -1,25 +1,26 @@
 import React, { Fragment } from "react";
-import estilos from "./CreateForm.module.css";
+// hooks
 import { useEffect, useState } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
-import getCountries, { postCountry } from "../actions/index.js";
 import { Link, useParams } from "react-router-dom";
+import { connect, useDispatch, useSelector } from "react-redux";
+import estilos from "./CreateForm.module.css";
+import getCountries, { postCountry } from "../actions/index.js";
+//-----------------------------------------------
 export default function CreateForm(params) {
   //---estados locales
   //----- hooks
   const dispatch = useDispatch();
-  //Requiero los paises para enlistarlos y que solo los disponibles en lista uno se seleccione
-  //requiero que las estaciones para enlistarlas Verano", "Otoño", "Invierno", "Primavera
-  //la duracion solo esta en "1", "2", "3", "4", "5
+  const allCountries = useSelector((state) => state.todosCountries);
+  //---
   useEffect(() => {
     dispatch(getCountries());
     console.log("entrada", input.name);
   }, []);
-  const allCountries = useSelector((state) => state.todosCountries);
-  const paises_name = allCountries.map((e) => e.name);
+
+  // const paises_name = allCountries.map((e) => e.name);
 
   //
-
+  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     name: "",
     difficulty: "",
@@ -28,7 +29,6 @@ export default function CreateForm(params) {
     country: [],
     countrye: [],
   });
-  const [errors, setErrors] = useState({});
   //----- fin hooks
 
   //--------------handleOnChange-----------------
@@ -44,15 +44,6 @@ export default function CreateForm(params) {
     // setErrors(handleValidacion(input));
     setErrors(handleValidacion({ ...input, [e.target.name]: e.target.value }));
     // console.log(input);
-  }
-  //-------------handleOnSubmit-----------------
-
-  function handleOnSubmit(e) {
-    console.log("***************dio click en boton submit****");
-    console.log("~~~~~dio click en boton submit~~~~~~", e);
-    e.preventDefault();
-    console.log(`lo que voy a despachar es lo sigueinte${input}`, input);
-    dispatch(postCountry(input));
   }
   //-------------handleOnOptionsSelect-----------------
   function handleOnOptionsSelect(e) {
@@ -100,20 +91,31 @@ export default function CreateForm(params) {
 
     setErrors(handleValidacion({ ...input, [e.target.name]: e.target.value }));
   }
-  //-------------handleDelete-----------------
+  //-------------handleOnSubmit-----------------
 
-  function handleDelete(e) {
-    console.log("dio click en delete elemento", e);
-    let paisFin = input.country.filter((el) => el !== e);
-    console.log("dio click en delete y el filtro es---", paisFin);
+  function handleOnSubmit(e) {
+    e.preventDefault();
+    console.log(`lo que voy a despachar es lo sigueinte${input}`, input);
+    //--sin digitar nada
+    if (input.name == "") {
+      setErrors(handleValidacion({ ...input, ["name"]: "" }));
+      return alert("debe de agregar cada valor!!");
+    } else {
+      dispatch(postCountry(input));
+      alert("se creo actividad...");
+    }
+    //--fin sin digitar nada
 
     setInput({
-      ...input,
-      ["countrye"]: paisFin,
-      country: paisFin,
+      name: "",
+      difficulty: "",
+      season: "",
+      duration: "",
+      country: [],
+      countrye: [],
     });
-    setErrors(handleValidacion({ ...input, country: paisFin }));
   }
+
   //-------------validaciones-----------------
   let alfabetico = /^[a-z]+$/;
   let numerico = /^[0-9]+$/;
@@ -139,7 +141,20 @@ export default function CreateForm(params) {
     }
     return errors;
   }
+  //-------------handleDelete-----------------
 
+  function handleDelete(e) {
+    console.log("dio click en delete elemento", e);
+    let paisFin = input.country.filter((el) => el !== e);
+    console.log("dio click en delete y el filtro es---", paisFin);
+
+    setInput({
+      ...input,
+      ["countrye"]: paisFin,
+      country: paisFin,
+    });
+    setErrors(handleValidacion({ ...input, country: paisFin }));
+  }
   //-------------return-----------------
 
   return (
@@ -149,13 +164,17 @@ export default function CreateForm(params) {
         <button className={estilos.boton}>VOLVER</button>
       </Link>
 
-      <form action="" onSubmit={(e) => handleOnSubmit(e)}>
+      <form
+        action=""
+        onSubmit={(e) => handleOnSubmit(e)}
+        className={estilos.formulario}
+      >
         {/* //------nombre ---------------------------------------*/}
         <div>
           <label htmlFor="">Nombre:</label>
           <input
             type="text"
-            value={input.name}
+            value={input.name} //si no coloco esto despues al crearse no deja limpiar el texto
             // value=""
             name="name"
             placeholder="Nombre..."
@@ -167,10 +186,10 @@ export default function CreateForm(params) {
         </div>{" "}
         {/* //-----------duration ---------------------------------------*/}
         <div>
-          <label htmlFor="">Duracion:</label>
+          <label htmlFor="">Duracion (Horas):</label>
           <input
             type="text"
-            // value={input.duration}
+            value={input.duration}
             // value=""
             name="duration"
             placeholder="Duracion.."
@@ -188,7 +207,6 @@ export default function CreateForm(params) {
             name="difficulty"
             id=""
             onChange={(e) => handleOnOptionsSelect(e)}
-            className={estilos.selecttiposelec}
           >
             <option value="">seleccione</option>
             <option value="1">Muy Baja</option>
@@ -210,7 +228,6 @@ export default function CreateForm(params) {
             name="season"
             id=""
             onChange={(e) => handleOnOptionsSelect(e)}
-            className={estilos.selecttiposelec}
           >
             <option value="">seleccione</option>
             <option value="Verano">Verano</option>
@@ -230,7 +247,6 @@ export default function CreateForm(params) {
             name="country"
             id=""
             onChange={(e) => handleOnOptionsSelectC(e)}
-            className={estilos.selecttiposelec}
           >
             <option value="">Seleccione pais</option>
             {allCountries.map((el) => (
@@ -243,7 +259,7 @@ export default function CreateForm(params) {
             {errors.country && <p>{errors.country}</p>}
           </label>
           {/* --- */}
-          <div>
+          <div className={estilos.formulariotypo}>
             {input.country.map((el) => (
               <div key={el}>
                 {/* <p>{el}</p> */}
@@ -255,6 +271,7 @@ export default function CreateForm(params) {
                   x
                 </button>
                 <span>{el}</span>
+                <p></p>
               </div>
             ))}
           </div>
@@ -272,21 +289,19 @@ export default function CreateForm(params) {
         </div>
         <button
           type="submit"
-          name="crear....................................................................................."
           className={estilos.boton}
           disabled={Object.keys(errors).length ? true : false}
         >
           Crear
         </button>
-        <select
+        {/* <select
           name="creaElimina"
           id=""
           onChange={(e) => handleOnOptionsSelect(e)}
-          className={estilos.selecttiposelec}
         >
           <option value="c">crea</option>
           <option value="e">elimina</option>
-        </select>
+        </select> */}
       </form>
     </div>
   );

@@ -16,10 +16,11 @@ export default function Paginado(params) {
     max = 1;
   } else if (allCountries.length > 9) {
     console.log("entro al mayor a 9");
-    let bloqDeci = allCountries.length / 10;
+    //let bloqDeci = allCountries.length / 10;
+    let bloqDeci = (allCountries.length - 9) / 10;
     blokTotales = Math.ceil(bloqDeci, 1);
     max = 1 + blokTotales;
-    console.log("entro al mayor a 9----");
+    console.log("entro al mayor a 9----total de bloques****", blokTotales);
   }
 
   for (let i = 0; i < max; i++) {
