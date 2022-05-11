@@ -168,7 +168,9 @@ router.get("/countries/:id", async (req, res, next) => {
         },
       },
     });
-    // let countryId = await Country.findByPk(id.toUpperCase());
+    //
+
+    // let countryId = await Country.findByPk(id.toUpperCase(), {include:{model:activity}});
 
     if (countryId === null) {
       res.status(400).send("no se encuentra Pais");

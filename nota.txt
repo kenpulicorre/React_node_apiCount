@@ -1,0 +1,16 @@
+shutdown -s -t 16000
+
+ "start": "set PORT=4000 react-scripts start",
+
+si al filtrar el paginado no cuadra y da un bloqeu de mas significa que la logica de paginado.jsx esta mal
+
+pagina paginado seccion:20 :// let bloqDeci = (allCountries.length - 9) / 10;
+
+si al filtrar por continente no vuelve a la pagina 1 se corrige asi:
+pagina home seccion :94// setActualpage(1);
+
+
+user.findByPK(id,{includes:page}).then((user)=>{res.send({user})}).catch()
+user.findAll().then((users)=>res.render("users",{users}))
+
+player.create({name,apellido}).then((datax)=>{res.status(200).json({data:datax}).catch((er)=>{res.status(400).json(er)})

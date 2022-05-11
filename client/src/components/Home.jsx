@@ -11,6 +11,7 @@ import {
   filterByContinent,
   filterByActivity,
   restartDetalle,
+  filterByPoblacion20,
 } from "../actions/index.js";
 import getCountries from "../actions/index";
 import Paginado from "./Paginado";
@@ -69,6 +70,13 @@ export default function Home(params) {
   }, [dispatch]); //[] =1sola vez,[state]=cada state ejecuta
 
   //------------funciones internas----------//
+  function handleClick20(params) {
+    dispatch(filterByPoblacion20());
+
+    console.log("-------------------------------++++", allCountries);
+    setOrder(`se ordeno`);
+  }
+
   function handleClick(e) {
     e.preventDefault();
     dispatch(getCountries());
@@ -212,6 +220,16 @@ export default function Home(params) {
             <option value="max">mayor poblacion</option>
             <option value="min">menos poblacion</option>
           </select>
+        </div>
+
+        <div>
+          <h3>ordenar poblacio menor 20mill</h3>
+          <button
+            onClick={(e) => handleClick20(e)}
+            className={estilos.crear_pais}
+          >
+            poblacion20
+          </button>
         </div>
         {/* filtrar por continente */}
         <div>

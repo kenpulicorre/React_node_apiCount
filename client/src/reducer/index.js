@@ -9,6 +9,7 @@ import {
   FILTER_ACTIVITY,
   DETALLE_RESTAURAR,
   POST_COUNTRY,
+  FILTER_POBLACION20,
 } from "../actions/index.js";
 const initialState = {
   todosCountries: [],
@@ -136,6 +137,14 @@ function rootReducer(state = initialState, action) {
     //---------------
     case POST_COUNTRY:
       return { ...state };
+    case FILTER_POBLACION20:
+      let paisesOrdenadosByPeople20;
+      paisesOrdenadosByPeople20 = state.todosCountries.filter(
+        (e) => e.people < 20000000
+      );
+
+      console.log("++++++++++hola++", paisesOrdenadosByPeople20);
+      return { ...state, todosCountries: paisesOrdenadosByPeople20 };
 
     default:
       return state;

@@ -10,6 +10,7 @@ export const FILTER_CONTINENT = "filterByContinent";
 export const FILTER_ACTIVITY = "filterByActivity";
 export const DETALLE_RESTAURAR = "restartDetalle";
 export const POST_COUNTRY = "postCountry";
+export const FILTER_POBLACION20 = "filterByPoblacion20";
 
 //~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -99,6 +100,12 @@ export function postCountry(params) {
     }
   };
 }
+//~~~~~~~~~~~~~~~~~~~~~~~
+export function filterByPoblacion20(params) {
+  console.log("--Action filterByContinent ok!--", params);
+  return { type: FILTER_POBLACION20, payload: params };
+}
+
 //~~~~~~~~~~~~~~~~~~~~~~~
 
 export default function getCountries() {
