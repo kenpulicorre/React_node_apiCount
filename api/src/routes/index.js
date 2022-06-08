@@ -304,5 +304,8 @@ router.delete("/activity", async (req, res, next) => {
 //-------fin prueba get /activity:-----------------------|
 //-------------------fin de rutas-------------------------------//
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+router.get("/checkout", async (req, res, next) => {
+  // const dbCountry = await addToDbCountry();
+  res.send("ruta /checkout");
+});
 module.exports = router;

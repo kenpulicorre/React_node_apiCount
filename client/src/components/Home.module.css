@@ -124,3 +124,17 @@
 .button:hover {
   transform: scale(1.1);
 }
+.bg_black {
+  background: radial-gradient(
+    circle,
+    rgb(190, 25, 39) 100%,
+    rgb(190, 25, 25) 100%
+  );
+
+  padding: 3px 10px;
+}
+.todo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
