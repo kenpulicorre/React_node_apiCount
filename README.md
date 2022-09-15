@@ -2,22 +2,15 @@
     <img src='https://raw.githubusercontent.com/kenpulicorre/countries_proyect/main/client/src/images/bandera.gif' </img>
 </p>
 
-# Project Countries
+# Project using an api public countries
 
-<p align="left">
-  <img height="200" src="./countries.png" />
-</p>
+
 
 ## Objetivos del Proyecto
 
 - Construir una App utlizando React, Redux, Node y Sequelize.
-- Aprender mejores prácticas.
-- Aprender y practicar el workflow de GIT.
-- Usar y practicar testing.
 
-## Tiempo
 
-El proyecto tendrá una duración máxima de tres semanas, se realizo el respectivo seguimiento diario de cada dato guardado
 
 ## Comenzando
 
